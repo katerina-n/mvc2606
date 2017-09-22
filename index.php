@@ -15,9 +15,27 @@ spl_autoload_register(function($className) {
 
 try {
     $request = new \Framework\Request($_GET, $_POST);
+    
+    $controller = $request->get('controller', 'default');
+    $action = $request->get('action', 'index');
+    
+    $controller = '\\Controller\\' . ucfirst($controller) . 'Controller';
+    
+    $controller = new $controller();
+    $action = $action . 'Action';
+    
+    if (!method_exists($controller, $action)) {
+        throw new \Exception("{$action} not found");
+    }
+    
+    $content = $controller->$action();
+    
 } catch (\Exception $e) {
-    echo $e->getMessage();
+    $content = $e->getMessage();
 }
 
 
 require 'layout.phtml';
+
+var_dump($controller, $action);
+
