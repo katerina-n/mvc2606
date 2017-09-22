@@ -1,7 +1,8 @@
 <?php
 
 define('DS', DIRECTORY_SEPARATOR);
-define('ROOT', __DIR__ . DS);
+define('ROOT', __DIR__ . DS); // /
+define('VIEW_DIR', ROOT . 'View' . DS); // /View
 
 spl_autoload_register(function($className) {
     $path = ROOT . str_replace('\\', DS, $className) . '.php';
