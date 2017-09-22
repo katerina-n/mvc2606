@@ -29,14 +29,10 @@ try {
         throw new \Exception("{$action} not found");
     }
     
-    $content = $controller->$action();
+    $content = $controller->$action($request);
     
 } catch (\Exception $e) {
     $content = $e->getMessage();
 }
 
-
-require 'layout.phtml';
-
-var_dump($controller, $action);
-
+echo $content;
