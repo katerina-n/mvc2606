@@ -3,6 +3,7 @@
 define('DS', DIRECTORY_SEPARATOR);
 define('ROOT', __DIR__ . DS . '..' . DS); // path: /../
 define('VIEW_DIR', ROOT . 'View' . DS); // /View
+define('CONF_DIR', ROOT . 'config' . DS); // /config
 
 spl_autoload_register(function($className) {
     $path = ROOT . str_replace('\\', DS, $className) . '.php';
@@ -15,6 +16,18 @@ spl_autoload_register(function($className) {
 });
 
 try {
+    \Framework\Session::start();
+    
+    $dbConfig = require CONF_DIR . 'db.php';
+    
+    $pdo = new \PDO(
+        $dbConfig['dsn'], 
+        $dbConfig['user'],
+        $dbConfig['password']
+    );
+    
+    $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
+    
     $request = new \Framework\Request($_GET, $_POST);
     
     $controller = $request->get('controller', 'default');
