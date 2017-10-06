@@ -4,6 +4,13 @@ namespace Framework;
 
 abstract class Controller
 {
+    protected $container;
+    
+    public function setContainer(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+    
     protected function render($view, array $args = [])
     {
         extract($args);

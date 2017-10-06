@@ -33,9 +33,16 @@ class DefaultController extends Controller
                 );
                 
                 FeedbackRepository::save($feedback);
+                // $repo->save
                 
                 Session::setFlash('Saved');
-                Router::redirect('/index.php?controller=default&action=feedback');
+                
+                $this
+                    ->container
+                    ->get('router')
+                    ->redirect('/index.php?controller=default&action=feedback')
+                ;
+                
             }
             
             Session::setFlash('Invalid form');

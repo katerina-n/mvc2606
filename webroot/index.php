@@ -28,6 +28,14 @@ try {
     
     $pdo->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
     
+    $container = new \Framework\Container();
+    $router = new \Framework\Router();
+    $repositoryFactory = new \Framework\RepositoryFactory();
+    $repositoryFactory->setPdo($pdo);
+    
+    $container->set('router', $router);
+    $container->set('repository_factory', $repositoryFactory);
+    
     $request = new \Framework\Request($_GET, $_POST);
     
     $controller = $request->get('controller', 'default');
@@ -36,6 +44,8 @@ try {
     $controller = '\\Controller\\' . ucfirst($controller) . 'Controller';
     
     $controller = new $controller();
+    $controller->setContainer($container);
+    
     $action = $action . 'Action';
     
     if (!method_exists($controller, $action)) {
