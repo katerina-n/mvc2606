@@ -6,7 +6,7 @@ use Framework\Controller;
 use Framework\Request;
 use Framework\Router;
 use Framework\Session;
-use Model\FeedbackForm;
+use Model\Form\FeedbackForm;
 use Model\Entity\Feedback;
 use Model\Repository\FeedbackRepository;
 
