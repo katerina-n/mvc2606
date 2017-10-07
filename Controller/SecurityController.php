@@ -2,6 +2,8 @@
 
 namespace Controller;
 
+use Framework\Controller;
+
 class SecurityController extends Controller
 {
     public function loginAction()
