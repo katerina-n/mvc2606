@@ -4,11 +4,22 @@ namespace Framework;
 
 abstract class Controller
 {
+    const DEFAULT_LAYOUT = 'layout.phtml';
+    
+    const ADMIN_LAYOUT = 'admin_layout.phtml';
+    
+    protected $layout = self::DEFAULT_LAYOUT;
+    
     protected $container;
     
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
+    }
+    
+    public function setAdminLayout()
+    {
+        $this->layout = self::ADMIN_LAYOUT;
     }
     
     protected function render($view, array $args = [])
@@ -27,7 +38,7 @@ abstract class Controller
         $content = ob_get_clean();
         
         ob_start();
-        require VIEW_DIR . 'layout.phtml';
+        require VIEW_DIR . $this->layout;
         $html = ob_get_clean();
         
         return new Response($html);
