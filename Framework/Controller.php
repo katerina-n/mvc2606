@@ -31,7 +31,10 @@ abstract class Controller
     {
         extract($args);
         
-        $path = str_replace(['Controller', '\\'], '', get_class($this));
+        $path = str_replace('Controller', '', get_class($this));
+        $path = trim($path, '\\');
+        $path = str_replace('\\', DS, $path);
+        
         $file = VIEW_DIR . $path . DS . $view;
         
         if (!file_exists($file)) {

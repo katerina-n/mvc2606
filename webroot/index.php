@@ -40,7 +40,10 @@ try {
     $controller = $request->get('controller', 'default');
     $action = $request->get('action', 'index');
     
-    $controller = '\\Controller\\' . ucfirst($controller) . 'Controller';
+    // bad hack - will be removed
+    $uri = $request->getUri();
+    $adminNamespace = strpos($uri, '/admin') === 0 ? "Admin\\" : '';
+    $controller = '\\Controller\\' . $adminNamespace . ucfirst($controller) . 'Controller';
     
     $controller = new $controller();
     $controller->setContainer($container);

@@ -47,7 +47,8 @@ class SecurityController extends Controller
     
     public function logoutAction()
     {
-        
+        Session::remove('user');
+        $this->container->get('router')->redirect('/');
     }
     
     public function changePasswordAction()
