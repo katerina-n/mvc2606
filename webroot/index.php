@@ -16,6 +16,7 @@ spl_autoload_register(function($className) {
 });
 
 try {
+    $request = new \Framework\Request($_GET, $_POST, $_SERVER);
     \Framework\Session::start();
     
     $dbConfig = require CONF_DIR . 'db.php';
@@ -36,8 +37,6 @@ try {
     $container->set('router', $router);
     $container->set('repository_factory', $repositoryFactory);
     
-    $request = new \Framework\Request($_GET, $_POST);
-    
     $controller = $request->get('controller', 'default');
     $action = $request->get('action', 'index');
     
@@ -45,6 +44,9 @@ try {
     
     $controller = new $controller();
     $controller->setContainer($container);
+    
+    // bad hack - will be removed
+    $controller->setLayout($request);
     
     $action = $action . 'Action';
     

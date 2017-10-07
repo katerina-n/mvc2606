@@ -17,9 +17,14 @@ abstract class Controller
         $this->container = $container;
     }
     
-    public function setAdminLayout()
+    public function setLayout(Request $request)
     {
-        $this->layout = self::ADMIN_LAYOUT;
+        $uri = $request->getUri();
+        
+        // bad hack - will be removed
+        if (strpos($uri, '/admin') === 0) {
+            $this->layout = self::ADMIN_LAYOUT;
+        }
     }
     
     protected function render($view, array $args = [])
