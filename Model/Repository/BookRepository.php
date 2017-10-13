@@ -63,6 +63,23 @@ class BookRepository
         return $collection;
     }
     
+    public function findByIds(array $ids)
+    {
+        $pdo = $this->pdo;
+        $placeholders = [];
+        foreach ($ids as $id) {
+            $placeholders[] = '?';
+        }
+        
+        $placeholders = implode(',', $placeholders);
+                
+        $collection = [];
+        $sth = $pdo->prepare("SELECT * FROM book WHERE id IN ({$placeholders}) ORDER BY title");
+        $sth->execute($ids);
+        
+        return $sth->fetchAll(\PDO::FETCH_ASSOC);
+    }
+    
     public function findActive()
     {
     }

@@ -30,11 +30,21 @@ class SecurityController extends Controller
                     ->findByEmail($form->email)
                 ;
                 
-                if (!$user) {
-                    throw new UserNotFoundException();
+                try {
+                    if (!$user) {
+                        throw new UserNotFoundException();
+                    }
+                    
+                    $this->verify($form->password, $user);
+                } catch (UserNotFoundException $e) {
+                    Session::setFlash($e->getMessage());
+                    
+                    $container
+                        ->get('router')
+                        ->redirect('/index.php?controller=security&action=login');
                 }
                 
-                $this->verify($form->password, $user);
+                
                 Session::set('user', $user->getEmail());
                 $container->get('router')->redirect('/admin/index.php?controller=default&action=index');
             }

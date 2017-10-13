@@ -10,7 +10,7 @@
               <div class="card-body">
                 <h4 class="card-title"><?=$book->getTitle() ?></h4>
                 <p class="card-text"><?=$book->getPrice() ?></p>
-                <a href="#" class="btn btn-primary">Add to cart</a>
+                <a href="/index.php?controller=cart&amp;action=addToCart&amp;id=<?=$book->getId() ?>" class="btn btn-primary">Add to cart</a>
                 <a href="/index.php?controller=book&amp;action=show&amp;id=<?=$book->getId() ?>" class="btn btn-success">Details</a>
               </div>
             </div>

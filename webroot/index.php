@@ -60,7 +60,8 @@ try {
     $content = $controller->$action($request);
     
 } catch (\Exception $e) {
-    $content = $e->getMessage();
+    $controller = new \Controller\ErrorController($e);
+    $content = $controller->errorAction();
 }
 
 echo $content;
