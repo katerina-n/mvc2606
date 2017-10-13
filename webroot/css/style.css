@@ -9,3 +9,7 @@ body {
 .flash-box:empty {
   display: none;
 }
+
+.form-container {
+  max-width:960px;
+}
