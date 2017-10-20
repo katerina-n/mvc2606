@@ -15,7 +15,12 @@ spl_autoload_register(function($className) {
     require $path;
 });
 
+require '../vendor/autoload.php';
+
 try {
+    $loader = new \Twig_Loader_Filesystem(VIEW_DIR);
+    $twig = new \Twig_Environment($loader, []);
+    
     $request = new \Framework\Request($_GET, $_POST, $_SERVER);
     \Framework\Session::start();
     
@@ -36,6 +41,7 @@ try {
     
     $container->set('router', $router);
     $container->set('repository_factory', $repositoryFactory);
+    $container->set('twig', $twig);
     
     $controller = $request->get('controller', 'default');
     $action = $request->get('action', 'index');
@@ -60,8 +66,9 @@ try {
     $content = $controller->$action($request);
     
 } catch (\Exception $e) {
-    $controller = new \Controller\ErrorController($e);
-    $content = $controller->errorAction();
+    dump($e->getMessage());
+    //$controller = new \Controller\ErrorController($e);
+    //$content = $controller->errorAction();
 }
 
 echo $content;

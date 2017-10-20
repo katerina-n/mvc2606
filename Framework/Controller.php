@@ -29,26 +29,41 @@ abstract class Controller
     
     protected function render($view, array $args = [])
     {
-        extract($args);
+        $twig = $this->container->get('twig');
         
         $path = str_replace('Controller', '', get_class($this));
         $path = trim($path, '\\');
         $path = str_replace('\\', DS, $path);
         
-        $file = VIEW_DIR . $path . DS . $view;
+        $file = $path . DS . $view;
         
-        if (!file_exists($file)) {
-            throw new \Exception("{$file} not found");
-        }
-        
-        ob_start();
-        require $file;
-        $content = ob_get_clean();
-        
-        ob_start();
-        require VIEW_DIR . $this->layout;
-        $html = ob_get_clean();
-        
-        return new Response($html);
+        return $twig->render($file, $args);
     }
+    
+    
+    
+    // protected function render($view, array $args = [])
+    // {
+    //     extract($args);
+        
+    //     $path = str_replace('Controller', '', get_class($this));
+    //     $path = trim($path, '\\');
+    //     $path = str_replace('\\', DS, $path);
+        
+    //     $file = VIEW_DIR . $path . DS . $view;
+        
+    //     if (!file_exists($file)) {
+    //         throw new \Exception("{$file} not found");
+    //     }
+        
+    //     ob_start();
+    //     require $file;
+    //     $content = ob_get_clean();
+        
+    //     ob_start();
+    //     require VIEW_DIR . $this->layout;
+    //     $html = ob_get_clean();
+        
+    //     return new Response($html);
+    // }
 }

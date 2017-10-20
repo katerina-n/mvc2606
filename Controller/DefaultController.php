@@ -14,7 +14,7 @@ class DefaultController extends Controller
 {
     public function indexAction(Request $request)
     {
-        return $this->render('index.phtml');
+        return $this->render('index.html.twig');
     }
     
     public function feedbackAction(Request $request)
